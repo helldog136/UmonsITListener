@@ -9,7 +9,14 @@ def mainLoop(serversocket):
             print "got something"
             print buf
             print "json only below"
-            print buf.split("{")[1:].join("{")
+            isJson = False
+            js = ""
+            for line in buf:
+                if line[0]=="{":
+                    isJson = True
+                if isJson:
+                    js += line
+            print js
 
 
 if __name__ == "__main__":
