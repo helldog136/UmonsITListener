@@ -35,8 +35,7 @@ def mainLoop(serversocket):
 
 def clone(url, dirName):
     print "Cloning", url, "in", dirName
-    repo = git.Repo.init(path=dirName)
-    repo.clone(url)
+    repo = git.Repo.clone_from(url, dirName)
     print "Done cloning..."
 
 def pull(repo, dirName):
