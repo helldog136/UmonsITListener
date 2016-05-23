@@ -6,6 +6,7 @@ import git
 
 baseDir = "/tmp/UmonsITListener/"
 targetDir = baseDir+"CompiledPDFs/"
+pdfRepoUrl= "https://github.com/UMonsIT/CompiledPDFs.git"
 
 def mainLoop(serversocket):
     while True:
@@ -30,7 +31,9 @@ def mainLoop(serversocket):
             if not (os.path.exists(dirName) and os.path.isdir(dirName)):
                 clone(jsdoc["repository"]["git_url"], dirName)
             pull(repository, dirName)
-            compileAndMove(dirName, targetDir)
+            if not (os.path.exists(targetDir) and os.path.isdir(targetDir)):
+                clone(pdfRepoUrl, baseDir)
+            compileAndMove(dirName, repository, targetDir)
             commitAndPush(targetDir)
 
 def clone(url, dirName):
@@ -40,19 +43,23 @@ def clone(url, dirName):
 
 def pull(repo, dirName):
     print "Pulling", repo, "in", dirName
+    git.Repo(dirName).remote().pull()
 
-def compileAndMove(compileDir, targetDir):
+def compileAndMove(compileDir, repoName, targetDir):
     print "Compiling", compileDir
-    move(compileDir, targetDir)
+    # TODO
+    move(compileDir, repoName, targetDir)
 
-def move(compileDir, targetDir):
-    print "Copying PDFs in", compileDir, "to", targetDir
+def move(compileDir, repoName, targetDir):
+    print "Copying PDFs in", compileDir, "to", targetDir+repoName
+    #TODO
 
 def commitAndPush(target):
-    print "Commiting", target, "with message",
     message = "Auto-compiled on " + datetime.datetime.now().isoformat()
-    print message
+    print "Commiting", target, "with message", message
+    git.Repo(target).commit(message)
     print "Pushing", target
+    git.Repo(target).remote().push()
 
 
 if __name__ == "__main__":
