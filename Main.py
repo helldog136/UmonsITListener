@@ -3,7 +3,7 @@ import socket
 def mainLoop(serversocket):
     while True:
         connection, address = serversocket.accept()
-        buf = connection.recv(64)
+        buf = connection.recv()
         if len(buf) > 0:
             print "got something"
             print buf
