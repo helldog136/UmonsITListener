@@ -4,8 +4,8 @@ import datetime
 import os
 import git
 
-baseDir = "/tmp/UmonsITListener/"
-targetDir = baseDir+"CompiledPDFs/"
+baseDir = "/tmp/UmonsITListener"
+targetDir = baseDir+"/CompiledPDFs/"
 pdfRepoUrl= "https://github.com/UMonsIT/CompiledPDFs.git"
 
 def mainLoop(serversocket):
