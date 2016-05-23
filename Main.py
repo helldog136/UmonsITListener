@@ -1,8 +1,10 @@
 import socket
 import json
+import datetime
 import os
 
 baseDir = "/tmp/UmonsITListener/"
+targetDir = baseDir+"CompiledPDFs/"
 
 def mainLoop(serversocket):
     while True:
@@ -26,12 +28,24 @@ def mainLoop(serversocket):
             if not (os.path.exists(dirName) and os.path.isdir(dirName)):
                 clone(jsdoc["repository"]["git_url"], dirName)
             pull(repository, dirName)
+            compileAndMove(dirName, targetDir)
+            commitAndPush(targetDir)
 
 def clone(url, dirName):
     print "Cloning ", url, " in ", dirName
 
 def pull(repo, dirName):
     print "Pulling ", repo, " in ", dirName
+
+def compileAndMove(compileDir, targetDir):
+    print "Compiling ", compileDir
+    print "Copying PDFs in ", compileDir, " to ", targetDir
+
+def commitAndPush(target):
+    print "Commiting ", target, " with message ",
+    message = "Auto-compiled on " + datetime.datetime.now().isoformat()
+    print message
+    print "Pushing ", target
 
 
 if __name__ == "__main__":
