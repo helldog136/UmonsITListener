@@ -22,6 +22,7 @@ def mainLoop(serversocket):
             #extract repo name
             jsdoc = json.JSONDecoder().decode(js)
             repository = jsdoc["repository"]["name"]
+            print "Detected changes in", repository, "("+jsdoc["repository"]["git_url"]+")"
             #launch the update routine
             #first check if repo has already been cloned
             dirName = baseDir+repository
@@ -32,20 +33,23 @@ def mainLoop(serversocket):
             commitAndPush(targetDir)
 
 def clone(url, dirName):
-    print "Cloning ", url, " in ", dirName
+    print "Cloning", url, "in", dirName
 
 def pull(repo, dirName):
-    print "Pulling ", repo, " in ", dirName
+    print "Pulling", repo, "in", dirName
 
 def compileAndMove(compileDir, targetDir):
-    print "Compiling ", compileDir
-    print "Copying PDFs in ", compileDir, " to ", targetDir
+    print "Compiling", compileDir
+    move(compileDir, targetDir)
+
+def move(compileDir, targetDir):
+    print "Copying PDFs in", compileDir, "to", targetDir
 
 def commitAndPush(target):
-    print "Commiting ", target, " with message ",
+    print "Commiting", target, "with message",
     message = "Auto-compiled on " + datetime.datetime.now().isoformat()
     print message
-    print "Pushing ", target
+    print "Pushing", target
 
 
 if __name__ == "__main__":
