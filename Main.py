@@ -3,7 +3,7 @@ import socket
 def mainLoop(serversocket):
     while True:
         connection, address = serversocket.accept()
-        buf = connection.recv()
+        buf = connection.recv(5000)
         if len(buf) > 0:
             print "got something"
             print buf
@@ -16,4 +16,7 @@ if __name__ == "__main__":
     serversocket.bind(('localhost', port))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
     while True :
-        mainLoop(serversocket)
+        try:
+            mainLoop(serversocket)
+        finally:
+            serversocket.close()
