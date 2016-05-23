@@ -17,6 +17,9 @@ def mainLoop(serversocket):
                 if isJson:
                     js += line
             print js
+            print "repo Name"
+            jsdoc = json.JSONDecoder().decode(js)
+            print jsdoc
 
 
 if __name__ == "__main__":
@@ -30,3 +33,4 @@ if __name__ == "__main__":
             mainLoop(serversocket)
         finally:
             serversocket.close()
+    serversocket.close()
