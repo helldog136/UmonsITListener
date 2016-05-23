@@ -46,7 +46,7 @@ def pull(repo, dirName):
     git.Repo(dirName).remote().pull()
 
 def compileAndMove(compileDir, repoName, targetDir):
-    print "Compiling", compileDir
+    print "Compiling", repoName, "in", compileDir
     # TODO
     move(compileDir, repoName, targetDir)
 
