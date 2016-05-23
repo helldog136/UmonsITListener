@@ -19,7 +19,7 @@ def mainLoop(serversocket):
             print js
             print "repo Name"
             jsdoc = json.JSONDecoder().decode(js)
-            print jsdoc
+            print jsdoc["repository"]["name"]
 
 
 if __name__ == "__main__":
