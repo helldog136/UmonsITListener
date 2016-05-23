@@ -1,4 +1,5 @@
 import socket
+import json
 
 def mainLoop(serversocket):
     while True:
@@ -7,6 +8,8 @@ def mainLoop(serversocket):
         if len(buf) > 0:
             print "got something"
             print buf
+            print "json only below"
+            print buf.split("{")[1:].join("{")
 
 
 if __name__ == "__main__":
