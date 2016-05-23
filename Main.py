@@ -32,6 +32,7 @@ def mainLoop(serversocket):
             if not (os.path.exists(dirName) and os.path.isdir(dirName)):
                 clone(repoUrl, dirName)
             pull(repository, dirName)
+
             if not (os.path.exists(targetDir) and os.path.isdir(targetDir)):
                 clone(pdfRepoUrl, baseDir)
             compileAndMove(dirName, repository, targetDir)
