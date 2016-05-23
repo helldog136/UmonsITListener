@@ -24,12 +24,13 @@ def mainLoop(serversocket):
             #extract repo name
             jsdoc = json.JSONDecoder().decode(js)
             repository = jsdoc["repository"]["name"]
-            print "Detected changes in", repository, "("+jsdoc["repository"]["git_url"]+")"
+            repoUrl = jsdoc["repository"]["git_url"]
+            print "Detected changes in", repository, "("+repoUrl+")"
             #launch the update routine
             #first check if repo has already been cloned
             dirName = baseDir+repository
             if not (os.path.exists(dirName) and os.path.isdir(dirName)):
-                clone(jsdoc["repository"]["git_url"], dirName)
+                clone(repoUrl, dirName)
             pull(repository, dirName)
             if not (os.path.exists(targetDir) and os.path.isdir(targetDir)):
                 clone(pdfRepoUrl, baseDir)
