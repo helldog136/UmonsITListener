@@ -5,6 +5,7 @@ def mainLoop(serversocket):
         connection, address = serversocket.accept()
         buf = connection.recv(64)
         if len(buf) > 0:
+            print "got something"
             print buf
 
 
