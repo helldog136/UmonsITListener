@@ -1,14 +1,15 @@
 import socket
 import json
+import os
+
+baseDir = "/tmp/UmonsITListener/"
 
 def mainLoop(serversocket):
     while True:
         connection, address = serversocket.accept()
         buf = connection.recv(500000)
         if len(buf) > 0:
-            print "got something"
-            print buf
-            print "json only below"
+            #isolate JSON from message
             isJson = False
             js = ""
             for line in buf:
@@ -16,10 +17,21 @@ def mainLoop(serversocket):
                     isJson = True
                 if isJson:
                     js += line
-            print js
-            print "repo Name"
+            #extract repo name
             jsdoc = json.JSONDecoder().decode(js)
-            print jsdoc["repository"]["name"]
+            repository = jsdoc["repository"]["name"]
+            #launch the update routine
+            #first check if repo has already been cloned
+            dirName = baseDir+repository
+            if not (os.path.exists(dirName) and os.path.isdir(dirName)):
+                clone(jsdoc["repository"]["git_url"], dirName)
+            pull(repository, dirName)
+
+def clone(url, dirName):
+    print "Cloning ", url, " in ", dirName
+
+def pull(repo, dirName):
+    print "Pulling ", repo, " in ", dirName
 
 
 if __name__ == "__main__":
