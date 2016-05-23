@@ -35,7 +35,7 @@ def mainLoop(serversocket):
 
 def clone(url, dirName):
     print "Cloning", url, "in", dirName
-    repo = git.Repo.clone_from(url, dirName, progress=True)
+    repo = git.Repo.clone_from(url, dirName)
     print "Done cloning..."
 
 def pull(repo, dirName):
@@ -61,9 +61,8 @@ if __name__ == "__main__":
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     serversocket.bind(('localhost', port))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
-    while True :
-        try:
+    try:
+        while True :
             mainLoop(serversocket)
-        finally:
-            serversocket.close()
-    serversocket.close()
+    finally:
+        serversocket.close()
