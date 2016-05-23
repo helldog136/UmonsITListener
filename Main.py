@@ -9,8 +9,10 @@ def mainLoop(serversocket):
 
 
 if __name__ == "__main__":
+    port = 4242
+    print "Starting server on port ", port, "..."
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    serversocket.bind(('localhost', 4242))
+    serversocket.bind(('localhost', port))
     serversocket.listen(5)  # become a server socket, maximum 5 connections
     while True :
         mainLoop(serversocket)
