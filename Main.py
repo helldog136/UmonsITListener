@@ -2,6 +2,7 @@ import socket
 import json
 import datetime
 import os
+import git
 
 baseDir = "/tmp/UmonsITListener/"
 targetDir = baseDir+"CompiledPDFs/"
@@ -34,6 +35,9 @@ def mainLoop(serversocket):
 
 def clone(url, dirName):
     print "Cloning", url, "in", dirName
+    repo = git.Repo.init(path=dirName)
+    repo.clone(url)
+    print "Done cloning..."
 
 def pull(repo, dirName):
     print "Pulling", repo, "in", dirName
