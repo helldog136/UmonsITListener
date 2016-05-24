@@ -6,7 +6,7 @@ from subprocess import call
 import git
 
 baseDir = "/tmp/UmonsITListener"
-targetDir = baseDir+"/CompiledPDFs/"
+targetDir = baseDir+"/CompiledPDFs"
 pdfRepoUrl= "https://github.com/UMonsIT/CompiledPDFs.git"
 
 def mainLoop(serversocket):
@@ -35,7 +35,7 @@ def mainLoop(serversocket):
             pull(repository, dirName)
 
             if not (os.path.exists(targetDir) and os.path.isdir(targetDir)):
-                clone(pdfRepoUrl, baseDir)
+                clone(pdfRepoUrl, targetDir)
             compileAndMove(dirName, repository, targetDir)
             commitAndPush(targetDir)
 
