@@ -2,6 +2,7 @@ import socket
 import json
 import datetime
 import os
+from subprocess import call
 import git
 
 baseDir = "/tmp/UmonsITListener"
@@ -47,14 +48,26 @@ def pull(repo, dirName):
     print "Pulling", repo, "in", dirName
     git.Repo(dirName).remote().pull()
 
+
+def hasMakefile(compileDir):
+    for fl in os.listdir(compileDir):
+        if os.path.isfile(compileDir+"/"+fl) and fl == "Makefile":
+            return True
+
+
 def compileAndMove(compileDir, repoName, targetDir):
-    print "Compiling", repoName, "in", compileDir
-    # TODO
-    move(compileDir, repoName, targetDir)
+    if hasMakefile(compileDir):
+        print "Compiling", repoName, "in", compileDir
+        call("cd "+compileDir+" && make")
+        move(compileDir, repoName, targetDir)
+    else:
+        for subFolder in os.listdir(compileDir):
+            if os.path.isdir(compileDir + "/" + subFolder):
+                compileAndMove(subFolder, repoName, targetDir)
 
 def move(compileDir, repoName, targetDir):
     print "Copying PDFs in", compileDir, "to", targetDir+repoName
-    #TODO
+    call("mv "+compileDir+"/*.pdf "+targetDir+"")
 
 def commitAndPush(target):
     message = "Auto-compiled on " + datetime.datetime.now().isoformat()
