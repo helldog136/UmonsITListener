@@ -35,7 +35,7 @@ def mainLoop(serversocket):
             pull(repository, dirName)
 
             if not (os.path.exists(targetDir) and os.path.isdir(targetDir)):
-                clone(pdfRepoUrl, baseDir)
+                clone(pdfRepoUrl, targetDir)
             compileAndMove(dirName, repository, targetDir)
             commitAndPush(targetDir)
 
