@@ -29,7 +29,7 @@ def mainLoop(serversocket):
             print "Detected changes in", repository, "("+repoUrl+")"
             #launch the update routine
             #first check if repo has already been cloned
-            dirName = baseDir+repository
+            dirName = baseDir+"/"+repository
             if not (os.path.exists(dirName) and os.path.isdir(dirName)):
                 clone(repoUrl, dirName)
             pull(repository, dirName)
